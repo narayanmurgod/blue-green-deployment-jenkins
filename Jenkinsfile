@@ -79,7 +79,7 @@ pipeline {
                     sudo apt install -y siege
                     LB_IP=\$(kubectl get svc ${SERVICE_NAME} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
                     echo "Testing Load Balancer IP: http://\${LB_IP}/"
-                    siege -c 250 -t 1M http://\${LB_IP}/
+                    siege -c 250 -t 5M http://\${LB_IP}/
                 """
             }
         }
