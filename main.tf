@@ -6,10 +6,6 @@ terraform {
     }
   }
 }
-provider "google" {
-  project = var.project_id
-  region  = var.region
-}
 
 locals {
  terraform_service_account = "terraform@cts05-murgod.iam.gserviceaccount.com"
