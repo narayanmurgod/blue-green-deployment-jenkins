@@ -1,6 +1,7 @@
 variable "project_id" {
   description = "The GCP project ID where resources will be created"
   type        = string
+  default = "cts05-murgod"
 }
 
 variable "region" {
