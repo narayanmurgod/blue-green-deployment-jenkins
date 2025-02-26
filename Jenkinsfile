@@ -38,7 +38,7 @@ pipeline {
                     timeout(time: 15, unit: 'MINUTES') {
                         waitUntil {
                             def status = sh(
-                                script: "gcloud container clusters describe ${CLUSTER_NAME} --location ${REGION} --format='value(status)'",
+                                script: "gcloud container clusters describe ${CLUSTER_NAME} --location ${location} --format='value(status)'",
                                 returnStdout: true
                             ).trim()
                             echo "Cluster status: ${status}"
@@ -53,7 +53,7 @@ pipeline {
             steps {
                 sh """
                     gcloud container clusters get-credentials ${CLUSTER_NAME} \
-                        --region ${REGION} \
+                        --location ${location} \
                         --project ${PROJECT_ID}
                     kubectl apply -f app.yaml
                 """
