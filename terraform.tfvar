@@ -1,0 +1,2 @@
+project_id = "cts05-murgod"  # Replace with your actual GCP project ID
+region     = "us-central1"          # Can be changed to your preferred region
