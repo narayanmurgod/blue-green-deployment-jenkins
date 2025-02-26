@@ -38,7 +38,7 @@ pipeline {
                     timeout(time: 15, unit: 'MINUTES') {
                         waitUntil {
                             def status = sh(
-                                script: "gcloud container clusters describe ${CLUSTER_NAME} --region ${REGION} --project ${PROJECT_ID} --format='value(status)'",
+                                script: "gcloud container clusters describe ${CLUSTER_NAME} --location ${REGION} --format='value(status)'",
                                 returnStdout: true
                             ).trim()
                             echo "Cluster status: ${status}"
