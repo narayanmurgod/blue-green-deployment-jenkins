@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = ">= 4.36.0, < 5.0.0"  # Use a compatible version
+    }
+  }
+}
 provider "google" {
   project = var.project_id
   region  = var.region
@@ -6,7 +14,7 @@ provider "google" {
 # VPC Network Configuration
 module "vpc" {
   source  = "terraform-google-modules/network/google"
-  version = "~> 4.0"
+  version = "~> 7.0"
 
   project_id   = var.project_id
   network_name = "gke-vpc"
@@ -39,7 +47,7 @@ module "vpc" {
 # GKE Cluster Configuration
 module "gke" {
   source  = "terraform-google-modules/kubernetes-engine/google//modules/private-cluster"
-  version = "~> 24.0"
+  version = "~> 27.0"
 
   project_id               = var.project_id
   name                     = "main-cluster"
@@ -74,7 +82,6 @@ module "gke" {
       image_type         = "COS_CONTAINERD"
       auto_repair        = true
       auto_upgrade       = true
-      service_account    = "default"
       preemptible        = false
       initial_node_count = 1
       
@@ -82,7 +89,7 @@ module "gke" {
     },
     {
       name               = "secondary-node-pool"
-      machine_type       = "e2-standard-4"
+      machine_type       = "e2-small"
       min_count          = 1
       max_count          = 3
       disk_size_gb       = 100
@@ -90,7 +97,6 @@ module "gke" {
       image_type         = "COS_CONTAINERD"
       auto_repair        = true
       auto_upgrade       = true
-      service_account    = "default"
       preemptible        = true
       initial_node_count = 1
      
