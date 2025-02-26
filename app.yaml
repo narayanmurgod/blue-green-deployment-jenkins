@@ -6,7 +6,7 @@ metadata:
   labels:
     app: nginx-app
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: nginx-app
@@ -31,11 +31,11 @@ spec:
         - containerPort: 80
         resources:
           requests:
-            cpu: "100m"  # 100 millicores (0.1 CPU core)
-            memory: "100Mi"  # 100 MiB
+            cpu: "200m"  # 100 millicores (0.1 CPU core)
+            memory: "200Mi"  # 100 MiB
           limits:
-            cpu: "100m"  # 100 millicores (0.1 CPU core)
-            memory: "100Mi"  # 100 MiB
+            cpu: "200m"  # 100 millicores (0.1 CPU core)
+            memory: "200Mi"  # 100 MiB
 ---
 apiVersion: v1
 kind: Service
@@ -59,17 +59,17 @@ spec:
     kind: Deployment
     name: nginx-deployment
   minReplicas: 2
-  maxReplicas: 10
+  maxReplicas: 20
   metrics:
   - type: Resource
     resource:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 60
+        averageUtilization: 50
   - type: Resource
     resource:
       name: memory
       target:
         type: Utilization
-        averageUtilization: 60
+        averageUtilization: 50
