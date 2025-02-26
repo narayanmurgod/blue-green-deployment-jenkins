@@ -54,6 +54,8 @@ module "gke" {
   name                     = "main-cluster"
   regional                 = true
   region                   = var.region
+  create_service_account   = false    
+  service_account          = "default"
   network                  = module.vpc.network_name
   subnetwork               = module.vpc.subnets["${var.region}/gke-subnet"].name
   ip_range_pods            = "pod-range"
