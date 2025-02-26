@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         PROJECT_ID = "cts05-murgod"  
-        REGION = "us-central1"
+        location = "us-central1"
         CLUSTER_NAME = "main-cluster"
         SERVICE_NAME = "nginx-service"
         GOOGLE_APPLICATION_CREDENTIALS = credentials('terraform-sa-key')
