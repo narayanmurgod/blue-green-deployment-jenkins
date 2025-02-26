@@ -76,7 +76,7 @@ module "gke" {
       name               = "primary-node-pool"
       machine_type       = "e2-medium"
       min_count          = 1
-      max_count          = 3
+      max_count          = 5
       disk_size_gb       = 100
       disk_type          = "pd-standard"
       image_type         = "COS_CONTAINERD"
@@ -91,7 +91,7 @@ module "gke" {
       name               = "secondary-node-pool"
       machine_type       = "e2-small"
       min_count          = 1
-      max_count          = 3
+      max_count          = 5
       disk_size_gb       = 100
       disk_type          = "pd-ssd"
       image_type         = "COS_CONTAINERD"
