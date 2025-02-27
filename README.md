@@ -1,4 +1,4 @@
-# blue-green-deployment-jenkins
+# traffic-based-node-scaling
 
 **Personal Notes:**
 1. Generate a GCE default service account key and add it to Jenkins as a secret file named "terraform-sa-key".
