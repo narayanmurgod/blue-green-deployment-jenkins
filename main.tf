@@ -48,7 +48,7 @@ module "gke" {
   create_service_account   = false    
   service_account          = "default"
   network                  = module.vpc.network_name
-  subnetwork               = module.vpc.subnets["${var.region}/gke-subnet"].name
+  subnetwork               = var.region
   ip_range_pods            = "pod-range"
   ip_range_services        = "service-range"
   
