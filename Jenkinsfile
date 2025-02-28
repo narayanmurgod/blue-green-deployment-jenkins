@@ -37,8 +37,9 @@ pipeline {
                 script {
                     timeout(time: 15, unit: 'MINUTES') {
                         waitUntil {
+                            // Use env. prefix for all environment variables
                             def status = sh(
-                                script: "gcloud container clusters describe ${CLUSTER_NAME} --location ${location} --format='value(status)'",
+                                script: "gcloud container clusters describe ${env.CLUSTER_NAME} --location ${env.location} --format='value(status)'",
                                 returnStdout: true
                             ).trim()
                             
@@ -53,17 +54,17 @@ pipeline {
         stage('Deploy Application') {
             steps {
                 sh """
-                    gcloud container clusters get-credentials ${CLUSTER_NAME} \
-                        --location ${location} \
-                        --project ${PROJECT_ID}
+                    gcloud container clusters get-credentials ${env.CLUSTER_NAME} \
+                        --location ${env.location} \
+                        --project ${env.PROJECT_ID}
                     kubectl apply -f app.yaml
                 """
-                // Wait for service to get external IP
                 script {
                     timeout(time: 10, unit: 'MINUTES') {
                         waitUntil {
+                            // Use env.SERVICE_NAME
                             def lbIp = sh(
-                                script: "kubectl get svc ${SERVICE_NAME} -o jsonpath='{.status.loadBalancer.ingress[0].ip}'",
+                                script: "kubectl get svc ${env.SERVICE_NAME} -o jsonpath='{.status.loadBalancer.ingress[0].ip}'",
                                 returnStdout: true
                             ).trim()
                             return lbIp != ""
@@ -78,7 +79,7 @@ pipeline {
                 sh """
                     sudo apt update
                     sudo apt install -y siege
-                    LB_IP=\$(kubectl get svc ${SERVICE_NAME} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+                    LB_IP=\$(kubectl get svc ${env.SERVICE_NAME} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
                     echo "Testing Load Balancer IP: http://\${LB_IP}/"
                     siege -c 250 -t 10M http://\${LB_IP}/
                 """
@@ -87,7 +88,6 @@ pipeline {
     }
     post {
         always {
-            // Cleanup steps (optional)
             echo "Pipeline completed"
         }
     }
