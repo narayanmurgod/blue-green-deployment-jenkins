@@ -57,7 +57,7 @@ gcloud iam service-accounts keys delete   <SERVICE ACCOUNT ID>  --iam-account=$G
 
 ***Set up impersonation***
 
-export GOOGLE_IMPERSONATE_SERVICE_ACCOUNT=`gcloud iam service-accounts list --format="value(email)"  --filter=name:terraform`  
+export GOOGLE_IMPERSONATE_SERVICE_ACCOUNT=`gcloud iam service-accounts list --format="value(email)"  --filter=name:terraform`
 
 gcloud auth application-default login --no-launch-browser 
 
@@ -69,3 +69,5 @@ gcloud iam service-accounts add-iam-policy-binding \
     --role="roles/iam.serviceAccountTokenCreator"  
 
 export GOOGLE_CLOUD_PROJECT=`gcloud info --format="value(config.project)"` 
+
+Remove -refresh-only while running the pipeline for the first time in the Terraform apply stage.
