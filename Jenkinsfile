@@ -41,6 +41,7 @@ pipeline {
                                 script: "gcloud container clusters describe ${CLUSTER_NAME} --location ${location} --format='value(status)'",
                                 returnStdout: true
                             ).trim()
+                            
                             echo "Cluster status: ${status}"
                             return status == "RUNNING"
                         }
