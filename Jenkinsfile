@@ -5,7 +5,7 @@ pipeline {
         location = "us-central1"
         CLUSTER_NAME = "main-cluster"
         SERVICE_NAME = "nginx-service"
-        GOOGLE_APPLICATION_CREDENTIALS = credentials('terraform-sa-key')
+        //GOOGLE_APPLICATION_CREDENTIALS = credentials('terraform-sa-key')
     }
     stages {
         stage('Terraform Init') {
