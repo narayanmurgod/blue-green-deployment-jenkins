@@ -62,7 +62,6 @@ module "gke" {
       display_name = "public-access"
     }
   ]
-
   # Node Pools Configuration
   remove_default_node_pool = true
   node_pools = [
