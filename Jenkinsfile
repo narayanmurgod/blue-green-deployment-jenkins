@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         PROJECT_ID = "cts05-murgod"  
-        location = "us-central1"
+        LOCATION = "us-central1"  // Changed to uppercase for consistency
         CLUSTER_NAME = "main-cluster"
         SERVICE_NAME = "nginx-service"
         GOOGLE_APPLICATION_CREDENTIALS = credentials('default-sa-key')
@@ -28,7 +28,8 @@ pipeline {
         
         stage('Terraform Apply') {
             steps {
-                sh 'terraform apply -refresh-only -auto-approve'
+                // Removed -refresh-only flag to actually apply changes
+                sh 'terraform apply -auto-approve'
             }
         }
         
@@ -37,9 +38,9 @@ pipeline {
                 script {
                     timeout(time: 15, unit: 'MINUTES') {
                         waitUntil {
-                            // Use env. prefix for all environment variables
                             def status = sh(
-                                script: "gcloud container clusters describe ${env.CLUSTER_NAME} --location ${env.location} --format='value(status)'",
+                                // Changed to use LOCATION environment variable
+                                script: "gcloud container clusters describe ${env.CLUSTER_NAME} --location ${env.LOCATION} --format='value(status)'",
                                 returnStdout: true
                             ).trim()
                             
@@ -55,14 +56,13 @@ pipeline {
             steps {
                 sh """
                     gcloud container clusters get-credentials ${env.CLUSTER_NAME} \
-                        --location ${env.location} \
+                        --location ${env.LOCATION} \
                         --project ${env.PROJECT_ID}
                     kubectl apply -f app.yaml
                 """
                 script {
                     timeout(time: 10, unit: 'MINUTES') {
                         waitUntil {
-                            // Use env.SERVICE_NAME
                             def lbIp = sh(
                                 script: "kubectl get svc ${env.SERVICE_NAME} -o jsonpath='{.status.loadBalancer.ingress[0].ip}'",
                                 returnStdout: true
@@ -79,7 +79,8 @@ pipeline {
                 sh """
                     sudo apt update
                     sudo apt install -y siege
-                    LB_IP=\$(kubectl get svc ${env.SERVICE_NAME} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+                    # Removed erroneous backslash before $()
+                    LB_IP=$(kubectl get svc ${env.SERVICE_NAME} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
                     echo "Testing Load Balancer IP: http://\${LB_IP}/"
                     siege -c 250 -t 10M http://\${LB_IP}/
                 """

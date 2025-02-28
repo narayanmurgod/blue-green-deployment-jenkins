@@ -51,7 +51,7 @@ module "gke" {
   subnetwork               = var.region
   ip_range_pods            = "pod-range"
   ip_range_services        = "service-range"
-  
+  subnetwork               = module.vpc.subnets["${var.region}/gke-subnet"].name  
   # Cluster security/config
   enable_private_endpoint  = false
   enable_private_nodes     = true
