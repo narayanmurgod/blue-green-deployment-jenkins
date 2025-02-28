@@ -48,10 +48,10 @@ module "gke" {
   create_service_account   = false    
   service_account          = "default"
   network                  = module.vpc.network_name
-  subnetwork               = var.region
+  subnetwork               = module.vpc.subnets["${var.region}/gke-subnet"].name
   ip_range_pods            = "pod-range"
   ip_range_services        = "service-range"
-  subnetwork               = module.vpc.subnets["${var.region}/gke-subnet"].name  
+  
   # Cluster security/config
   enable_private_endpoint  = false
   enable_private_nodes     = true
