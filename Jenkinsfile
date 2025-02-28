@@ -79,8 +79,7 @@ pipeline {
                 sh """
                     sudo apt update
                     sudo apt install -y siege
-                    # Removed erroneous backslash before $()
-                    LB_IP=$(kubectl get svc ${env.SERVICE_NAME} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+                    LB_IP=\$(kubectl get svc ${env.SERVICE_NAME} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
                     echo "Testing Load Balancer IP: http://\${LB_IP}/"
                     siege -c 250 -t 10M http://\${LB_IP}/
                 """
