@@ -29,7 +29,7 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 // Removed -refresh-only flag to actually apply changes
-                sh 'terraform apply -auto-approve'
+                sh 'terraform apply -refresh-only -auto-approve'
             }
         }
         

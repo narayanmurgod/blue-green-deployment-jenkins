@@ -9,3 +9,13 @@
 **Installation References:**
 1. Install Google Cloud SDK https://cloud.google.com/sdk/docs/install#deb
 2. Configure kubectl access for GKE clusters https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#apt_1
+
+
+
+Let’s go to teminal jenkins server and run below command:
+
+$ sudo visudo
+
+jenkins ALL=(ALL) NOPASSWD: ALL
+
+Jenkins: 403 No valid crumb was included in the request  https://stackoverflow.com/a/56167349
