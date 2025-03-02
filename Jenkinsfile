@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        PROJECT_ID = "cts05-murgod"  
+        PROJECT_ID = "probable-pager-452507-d4"  
         LOCATION = "us-central1"  // Changed to uppercase for consistency
         CLUSTER_NAME = "main-cluster"
         SERVICE_NAME = "nginx-service"
@@ -29,7 +29,7 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 // Removed -refresh-only flag to actually apply changes 
-                sh 'terraform apply -refresh-only -auto-approve'
+                sh 'terraform apply -auto-approve'
             }
         }
         

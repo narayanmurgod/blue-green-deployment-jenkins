@@ -75,7 +75,7 @@ module "gke" {
       image_type         = "COS_CONTAINERD"
       auto_repair        = true
       auto_upgrade       = true
-      preemptible        = false
+      preemptible        = true
       initial_node_count = 1
       
 
@@ -97,7 +97,6 @@ module "gke" {
   ]
 
   node_pools_tags = {
-    "primary-node-pool"   = ["primary-pool"]
     "secondary-node-pool" = ["secondary-pool"]
   }
 
