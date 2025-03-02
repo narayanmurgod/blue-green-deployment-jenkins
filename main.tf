@@ -67,31 +67,31 @@ module "gke" {
   node_pools = [
     {
       name               = "primary-node-pool"
-      machine_type       = "e2-medium"
+      machine_type       = "e2-small"
       min_count          = 0
-      max_count          = 3
-      disk_size_gb       = 100
+      max_count          = 4
+      disk_size_gb       = 20
       disk_type          = "pd-standard"
       image_type         = "COS_CONTAINERD"
       auto_repair        = true
       auto_upgrade       = true
       preemptible        = true
-      initial_node_count = 1
+     
       
 
     },
     {
       name               = "secondary-node-pool"
-      machine_type       = "n1-standard-4"
+      machine_type       = "e2-small"
       min_count          = 0
-      max_count          = 3
-      disk_size_gb       = 100
+      max_count          = 4
+      disk_size_gb       = 20
       disk_type          = "pd-ssd"
       image_type         = "COS_CONTAINERD"
       auto_repair        = true
       auto_upgrade       = true
       preemptible        = true
-      initial_node_count = 1
+     
      
     }
   ]
