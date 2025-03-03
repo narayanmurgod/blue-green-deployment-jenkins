@@ -10,4 +10,4 @@ variable "region" {
   default     = "us-central1"
 }
 
-# Optional: You can add more variables as needed
+

@@ -1,2 +1,2 @@
-project_id = "probable-pager-452507-d4"  # Replace with your actual GCP project ID
-region     = "us-central1"          # Can be changed to your preferred region
+project_id = "probable-pager-452507-d4"  
+region     = "us-central1"          

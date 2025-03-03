@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         PROJECT_ID = "probable-pager-452507-d4"  
-        LOCATION = "us-central1"  // Changed to uppercase for consistency
+        LOCATION = "us-central1"  
         CLUSTER_NAME = "main-cluster"
         SERVICE_NAME = "nginx-service"
         GOOGLE_APPLICATION_CREDENTIALS = credentials('default-sa-key')
@@ -39,7 +39,6 @@ pipeline {
                     timeout(time: 15, unit: 'MINUTES') {
                         waitUntil {
                             def status = sh(
-                                // Changed to use LOCATION environment variable
                                 script: "gcloud container clusters describe ${env.CLUSTER_NAME} --location ${env.LOCATION} --format='value(status)'",
                                 returnStdout: true
                             ).trim()

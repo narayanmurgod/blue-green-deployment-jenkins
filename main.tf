@@ -3,7 +3,6 @@ provider "google" {
   region  = var.region
 }
 
-# VPC Network Configuration
 module "vpc" {
   source  = "terraform-google-modules/network/google"
   version = "~> 7.0"
@@ -36,7 +35,6 @@ module "vpc" {
   }
 }
 
-# GKE Cluster Configuration
 module "gke" {
   source  = "terraform-google-modules/kubernetes-engine/google//modules/private-cluster"
   version = "~> 27.0"
@@ -62,7 +60,6 @@ module "gke" {
       display_name = "public-access"
     }
   ]
-  # Node Pools Configuration
   remove_default_node_pool = true
   node_pools = [
     {
@@ -76,9 +73,6 @@ module "gke" {
       auto_repair        = true
       auto_upgrade       = true
       preemptible        = true
-     
-      
-
     },
     {
       name               = "secondary-node-pool"
@@ -90,12 +84,9 @@ module "gke" {
       image_type         = "COS_CONTAINERD"
       auto_repair        = true
       auto_upgrade       = true
-      preemptible        = true
-     
-     
+      preemptible        = true    
     }
   ]
-
   node_pools_tags = {
     "secondary-node-pool" = ["secondary-pool"]
   }
